@@ -5,11 +5,11 @@ on:
       CPU:
         description: "分支"
         required: true
-        default: 'sm7675'
+        default: 'sm8650'
       FEIL:
         description: "配置文件"
         required: true
-        default: 'oneplus_ace_3v_v'
+        default: 'oneplus12_v'
       CPUD:
         description: "处理器代号"
         required: true
@@ -26,12 +26,12 @@ on:
         description: "添加 KSU Next"
         required: true
         type: boolean
-        default: false
+        default: true
       SUSFS_ENABLED:
         description: "添加 SUSFS"
         required: true
         type: boolean
-        default: false
+        default: true
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -49,8 +49,8 @@ jobs:
           
       - name: Configure Git
         run: |
-         git config --global user.name "build"
-         git config --global user.email "3436378798@qq.com"
+         git config --global user.name "xiaoxiao"
+         git config --global user.email "3567318711@qq.com"
 
       - name: Install dependencies
         run: |
