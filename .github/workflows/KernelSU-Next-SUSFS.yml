@@ -70,7 +70,7 @@ jobs:
       - name: Initialize repo and sync
         run: |
          mkdir kernel_workspace && cd kernel_workspace
-         repo init -u https://github.com/xx2901318208/kernel_manifest.git -b oppo/SM8650 -m oneplus12_v.xml --depth=1
+         repo init --repo-rev=v2.16 --depth=1 -u https://github.com/xx2901318208/kernel_manifest.git -b oppo/sm8650 -m find_x7_ultra.xml
          repo sync
          rm kernel_platform/common/android/abi_gki_protected_exports_* || echo "No protected exports!"
          rm kernel_platform/msm-kernel/android/abi_gki_protected_exports_* || echo "No protected exports!"
