@@ -70,14 +70,18 @@ jobs:
 
       - name: Check PATH and repo
         run: |
+          echo "Checking PATH..."
           echo $PATH
-          which repo
+          which repo || echo "repo command not found"
 
       - name: Initialize repo and sync
         run: |
+          echo "Initializing repo..."
           mkdir kernel_workspace && cd kernel_workspace
           repo init -u https://github.com/xx2901318208/kernel_manifest.git -b oppo/SM8650 -m find_x7_ultra_v.xml --depth=1
+          if [ $? -ne 0 ]; then echo "repo init failed"; exit 1; fi
           repo sync
+          if [ $? -ne 0 ]; then echo "repo sync failed"; exit 1; fi
           rm kernel_platform/common/android/abi_gki_protected_exports_* || echo "No protected exports!"
           rm kernel_platform/msm-kernel/android/abi_gki_protected_exports_* || echo "No protected exports!"
           sed -i 's/ -dirty//g' kernel_platform/common/scripts/setlocalversion
@@ -86,6 +90,7 @@ jobs:
       - name: Set up KernelSU Next
         if: github.event.inputs.KSUNEXT_ENABLED == 'true'
         run: |
+          echo "Setting up KernelSU Next..."
           cd kernel_workspace/kernel_platform
           ~/bin/repo --trace sync -j4
           curl -LSs "https://raw.githubusercontent.com/rifsxd/KernelSU-Next/next/kernel/setup.sh" | bash -s next
@@ -93,10 +98,11 @@ jobs:
           KSU_VERSION=$(expr $(/usr/bin/git rev-list --count HEAD) "+" 10200)
           echo "KSUVER=$KSU_VERSION" >> $GITHUB_ENV
           sed -i "s/DKSU_VERSION=11998/DKSU_VERSION=${KSU_VERSION}/" kernel/Makefile
-          
-      - name: Set up susfs
+
+      - name: Set up SUSFS
         if: github.event.inputs.SUSFS_ENABLED == 'true'
         run: |
+          echo "Setting up SUSFS..."
           cd kernel_workspace
           git clone https://gitlab.com/simonpunk/susfs4ksu.git -b gki-${{ github.event.inputs.ANDROID_VERSION }}-${{ github.event.inputs.KERNEL_VERSION }}
           git clone https://github.com/TheWildJames/kernel_patches.git
@@ -117,17 +123,20 @@ jobs:
           cp ../../kernel_patches/69_hide_stuff.patch ./ 
           patch -p1 -F 3 < 69_hide_stuff.patch
           git add -A && git commit -a -m "BUILD Kernel"
-          cd ..
+          cd .. 
           cd ./msm-kernel && git add -A && git commit -a -m "BUILD Kernel"
           cd ..
 
       - name: Build kernel
         run: |
+          echo "Building kernel..."
           cd kernel_workspace
           ./kernel_platform/oplus/build/oplus_build_kernel.sh ${{ github.event.inputs.CPUD }} gki
-         
+          if [ $? -ne 0 ]; then echo "Kernel build failed"; exit 1; fi
+
       - name: Make AnyKernel3
         run: |
+          echo "Making AnyKernel3..."
           git clone https://github.com/Kernel-SU/AnyKernel3 --depth=1
           rm -rf ./AnyKernel3/.git
           cp kernel_workspace/kernel_platform/out/msm-kernel-${{ github.event.inputs.CPUD }}-gki/dist/Image ./AnyKernel3/
