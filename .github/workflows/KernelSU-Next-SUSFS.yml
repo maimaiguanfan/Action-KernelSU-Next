@@ -53,8 +53,8 @@ jobs:
           
       - name: Configure Git
         run: |
-         git config --global user.name "xiaoxiao"
-         git config --global user.email "2210077278@qq.com"
+         git config --global user.name "guige"
+         git config --global user.email "2901318208@qq.com"
 
       - name: Install dependencies
         run: |
@@ -70,7 +70,7 @@ jobs:
       - name: Initialize repo and sync
         run: |
          mkdir kernel_workspace && cd kernel_workspace
-         repo init -u https://github.com/OnePlusOSS/kernel_manifest.git -b refs/heads/oneplus/${{ github.event.inputs.CPU }} -m ${{ github.event.inputs.FEIL }}.xml --depth=1
+         repo init -u https://github.com/xx2901318208/kernel_manifest.git -b oppo/SM8650 -m find_x7_ultra_v.xml --depth=1
          repo sync
          rm kernel_platform/common/android/abi_gki_protected_exports_* || echo "No protected exports!"
          rm kernel_platform/msm-kernel/android/abi_gki_protected_exports_* || echo "No protected exports!"
