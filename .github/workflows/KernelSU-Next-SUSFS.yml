@@ -65,8 +65,13 @@ jobs:
           mkdir -p ~/bin
           curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
           chmod a+x ~/bin/repo
-          echo 'export PATH="$HOME/bin:$PATH"' >> ~/.bashrc
-          source ~/.bashrc
+          echo 'export PATH="$HOME/bin:$PATH"' >> ~/.bash_profile
+          source ~/.bash_profile
+
+      - name: Check PATH and repo
+        run: |
+          echo $PATH
+          which repo
 
       - name: Initialize repo and sync
         run: |
@@ -104,12 +109,12 @@ jobs:
           # Apply patches
           cd ./KernelSU-Next
           patch -p1 --forward < 10_enable_susfs_for_ksu.patch || true
-          cp ../../kernel_patches/KernelSU-Next-Implement-SUSFS-${{ github.event.inputs.SUSFS_VERSION }}-Universal.patch ./
+          cp ../../kernel_patches/KernelSU-Next-Implement-SUSFS-${{ github.event.inputs.SUSFS_VERSION }}-Universal.patch ./ 
           patch -p1 < KernelSU-Next-Implement-SUSFS-${{ github.event.inputs.SUSFS_VERSION }}-Universal.patch || true
           
           cd ../common
           patch -p1 < 50_add_susfs_in_gki-${{ github.event.inputs.ANDROID_VERSION }}-${{ github.event.inputs.KERNEL_VERSION }}.patch || true
-          cp ../../kernel_patches/69_hide_stuff.patch ./
+          cp ../../kernel_patches/69_hide_stuff.patch ./ 
           patch -p1 -F 3 < 69_hide_stuff.patch
           git add -A && git commit -a -m "BUILD Kernel"
           cd ..
