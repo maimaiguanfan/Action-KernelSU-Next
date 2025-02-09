@@ -78,10 +78,8 @@ jobs:
         run: |
           echo "Initializing repo..."
           mkdir kernel_workspace && cd kernel_workspace
-          repo init -u https://github.com/xx2901318208/kernel_manifest.git -b oppo/SM8650 -m find_x7_ultra_v.xml --depth=1
-          if [ $? -ne 0 ]; then echo "repo init failed"; exit 1; fi
+          repo init -u https://github.com/xx2901318208/kernel_manifest.git -b refs/heads/oppo/SM8650 -m find_x7_ultra_v.xml --depth=1
           repo sync
-          if [ $? -ne 0 ]; then echo "repo sync failed"; exit 1; fi
           rm kernel_platform/common/android/abi_gki_protected_exports_* || echo "No protected exports!"
           rm kernel_platform/msm-kernel/android/abi_gki_protected_exports_* || echo "No protected exports!"
           sed -i 's/ -dirty//g' kernel_platform/common/scripts/setlocalversion
