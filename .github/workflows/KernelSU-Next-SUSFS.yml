@@ -74,8 +74,10 @@ jobs:
          repo sync
          rm kernel_platform/common/android/abi_gki_protected_exports_* || echo "No protected exports!"
          rm kernel_platform/msm-kernel/android/abi_gki_protected_exports_* || echo "No protected exports!"
+         sed -i 's/check_defconfig//' ./common/build.config.gki
          sed -i '$s|echo "\$res"|echo "\$res-xiaoxiaow"|' ./common/scripts/setlocalversion
          sed -i '$s|echo "\$res"|echo "\$res-xiaoxiaow"|' ./msm-kernel/scripts/
+         sed -i "/stable_scmversion_cmd/s/-maybe-dirty//g" ./build/kernel/kleaf/impl/stamp.bzl
          sed -i 's/ -dirty//g' kernel_platform/common/scripts/setlocalversion
          sed -i 's/ -dirty//g' kernel_platform/msm-kernel/scripts/setlocalversion
 
