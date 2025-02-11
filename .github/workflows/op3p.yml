@@ -1,4 +1,4 @@
-name: Build KernelSU Next op3p
+name: Build KernelSU Next OnePlus Ace 3 Pro
 on:
   workflow_dispatch:
     inputs:
