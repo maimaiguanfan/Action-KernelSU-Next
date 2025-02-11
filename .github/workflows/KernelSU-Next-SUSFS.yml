@@ -1,4 +1,4 @@
-name: Build KernelSU Next OnePlus12
+name: Build KernelSU Next OnePlus12 
 on:
   workflow_dispatch:
     inputs:
