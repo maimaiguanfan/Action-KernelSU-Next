@@ -1,11 +1,7 @@
-name: Build Kernel Next-SUSFS For OPA3P
+name: Build Kernel Next-SUSFS For OnePlus12
 on:
   workflow_dispatch:
     inputs:
-      Branches:
-        description: "内核分支"
-        required: true
-        default: 'OnePlusOSS'    
       CPU:
         description: "处理器分支"
         required: true
@@ -62,10 +58,10 @@ jobs:
          chmod a+x ~/repo
          sudo mv ~/repo /usr/local/bin/repo
 
-      - name: Initialize repo 和 sync
+      - name: Initialize repo and sync
         run: |
          mkdir kernel_workspace && cd kernel_workspace
-         repo init -u https://github.com/${{ github.event.inputs.Branches }}/kernel_manifest.git -b refs/heads/oneplus/${{ github.event.inputs.CPU }} -m ${{ github.event.inputs.FEIL }}.xml --depth=1
+         repo init -u https://github.com/OnePlusOSS/kernel_manifest.git -b refs/heads/oneplus/${{ github.event.inputs.CPU }} -m ${{ github.event.inputs.FEIL }}.xml --depth=1
          repo sync
          rm kernel_platform/common/android/abi_gki_protected_exports_* || echo "No protected exports!"
          rm kernel_platform/msm-kernel/android/abi_gki_protected_exports_* || echo "No protected exports!"
@@ -117,6 +113,7 @@ jobs:
          ./kernel_platform/build_with_bazel.py \
             -t pineapple \
             gki \
+            
       - name: Make AnyKernel3
         run: |
          git clone https://github.com/TanakaLun/AnyKernel3 --depth=1
