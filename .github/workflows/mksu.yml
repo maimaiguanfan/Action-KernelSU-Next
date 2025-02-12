@@ -1,4 +1,4 @@
-name: Build MKSU-SUSFS For OPA3P
+name: Build MKSU-SUSFS For OnePlus12
 on:
   workflow_dispatch:
    inputs:
