@@ -1,4 +1,4 @@
-name: Build MKSU-SUSFS For OnePlus 12（实验性
+name: Build MKSU-SUSFS For OnePlus 12
 on:
   workflow_dispatch:
    inputs:
