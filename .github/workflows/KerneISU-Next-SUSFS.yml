@@ -1,4 +1,4 @@
-name: Build Kernel Next-SUSFS For OnePlus12 With Name(实验性)
+name: Build Kernel Next-SUSFS For OnePlus12 With Name
 on:
   workflow_dispatch:
     inputs:
@@ -22,11 +22,10 @@ on:
         description: "内核版本"
         required: true
         default: '6.1'
-      SUSFS_DOWNLOAD:
-        description: "添加 SUSFS 模块"
+      SUSFS_VERSION:
+        description: "SUSFS 版本"
         required: true
-        type: boolean
-        default: true        
+        default: 'v1.5.5'   
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -88,13 +87,13 @@ jobs:
            cd kernel_platform
            cp ../susfs4ksu/kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch ./KernelSU-Next/
            cp ../susfs4ksu/kernel_patches/50_add_susfs_in_gki-${{ github.event.inputs.ANDROID_VERSION }}-${{ github.event.inputs.KERNEL_VERSION }}.patch ./common/
-           cp ../kernel_patches/KernelSU-Next-Implement-SUSFS-v1.5.5-Universal.patch ./KernelSU-Next/
+           cp ../kernel_patches/KernelSU-Next-Implement-SUSFS-${{ github.event.inputs.SUSFS_VERSION }}-Universal.patch ./KernelSU-Next/
            cp ../susfs4ksu/kernel_patches/fs/* ./common/fs/
            cp ../susfs4ksu/kernel_patches/include/linux/* ./common/include/linux/
 
            # Apply patches
            cd ./KernelSU-Next
-           patch -p1 < KernelSU-Next-Implement-SUSFS-v1.5.5-Universal.patch || true
+           patch -p1 < KernelSU-Next-Implement-SUSFS-${{ github.event.inputs.SUSFS_VERSION }}-Universal.patch || true
            #patch -p1 --forward < 10_enable_susfs_for_ksu.patch || true
            cd ../common
            patch -p1 < 50_add_susfs_in_gki-${{ github.event.inputs.ANDROID_VERSION }}-${{ github.event.inputs.KERNEL_VERSION }}.patch || true
