@@ -1,4 +1,4 @@
-name: 无后缀 - Build KernelSU Next OnePlus 12
+name: Build OnePlus12 KernelSU Next
 on:
   workflow_dispatch:
     inputs:
@@ -54,8 +54,8 @@ jobs:
           
       - name: Configure Git
         run: |
-         git config --global user.name "xiaoxiao"
-         git config --global user.email "2210077278@qq.com"
+         git config --global user.name "build"
+         git config --global user.email "3436378798@qq.com"
 
       - name: Install dependencies
         run: |
@@ -123,7 +123,6 @@ jobs:
            
            # cp ../kernel_patches/selinux.c_fix.patch ./
            # patch -p1 -F 3 < selinux.c_fix.patch
-
            
       - name: Build kernel
         run: |
