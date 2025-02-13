@@ -26,7 +26,7 @@ on:
         description: "添加 SUSFS 模块"
         required: true
         type: boolean
-        default: false        
+        default: true        
 jobs:
   build:
     runs-on: ubuntu-latest
