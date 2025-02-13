@@ -1,4 +1,4 @@
-name: Build Kernel Next-SUSFS For OnePlus12
+name: Build Kernel Next-SUSFS For OnePlus12 With Name
 on:
   workflow_dispatch:
     inputs:
