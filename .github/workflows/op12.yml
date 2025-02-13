@@ -1,4 +1,4 @@
-name: Build KernelSU Next OnePlus Ace 3 Pro
+name: Build KernelSU Next OnePlus 12 With No name
 on:
   workflow_dispatch:
     inputs:
@@ -9,7 +9,7 @@ on:
       FEIL:
         description: "配置文件"
         required: true
-        default: 'oneplus_ace3_pro'
+        default: 'oneplus12_v'
       CPUD:
         description: "处理器代号"
         required: true
