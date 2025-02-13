@@ -1,4 +1,4 @@
-name: Build Kernel Next-SUSFS For OnePlus12
+name: Build Kernel Next-SUSFS For OnePlus devices
 on:
   workflow_dispatch:
     inputs:
@@ -9,7 +9,7 @@ on:
       FEIL:
         description: "配置文件"
         required: true
-        default: 'oneplus12_v'
+        default: 'oneplus_ace3_pro_v'
       CPUD:
         description: "处理器代号"
         required: true
@@ -44,7 +44,7 @@ jobs:
       - name: Configure Git
         run: |
          git config --global user.name "build"
-         git config --global user.email "3436378798@qq.com"
+         git config --global user.email "maimaiguanfan@gmail.com"
 
       - name: Install dependencies
         run: |
@@ -67,9 +67,7 @@ jobs:
          sed -i 's/ -dirty//g' kernel_platform/common/scripts/setlocalversion
          sed -i 's/ -dirty//g' kernel_platform/msm-kernel/scripts/setlocalversion
          sed -i 's/ -dirty//g' kernel_platform/external/dtc/scripts/setlocalversion
-         sed -i '$s|echo "\$res"|echo "$res-xiaoxiaow"|' kernel_platform/common/scripts/setlocalversion            
-         sed -i '$s|echo "\$res"|echo "$res-xiaoxiaow"|' kernel_platform/msm-kernel/scripts/setlocalversion
-         
+  
       - name: Set up KernelSU Next
         run: |
          cd kernel_workspace/kernel_platform
