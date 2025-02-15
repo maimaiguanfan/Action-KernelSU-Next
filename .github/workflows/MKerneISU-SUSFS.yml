@@ -1,4 +1,4 @@
-name: Build MKSU-SUSFS For OnePlus devices
+name: Build MKSU-SUSFS For OnePlus Ace 3 Pro
 on:
   workflow_dispatch:
    inputs:
